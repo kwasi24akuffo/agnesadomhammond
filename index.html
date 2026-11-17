@@ -1,0 +1,444 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>A Quiet Apology</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: one focused stage at a time, left-aligned large type, actions at the foot.
+     Colour: late-night plum with a rose glow. Type: Bricolage Grotesque (it can shout and whisper) over DM Sans. */
+  :root {
+    --bg: #f4e8ee;
+    --surface: #fff7fa;
+    --fg: #2b1733;
+    --muted: #6a5372;
+    --line: rgba(43, 23, 51, 0.18);
+    --accent: #bf2f5b;
+    --accent-ink: #ffffff;
+    --glow: 191, 47, 91;
+    --f-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+    --f-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #170f24;
+      --surface: #22173a;
+      --fg: #f6e8f0;
+      --muted: #bba5c6;
+      --line: rgba(246, 232, 240, 0.2);
+      --accent: #ff7d9d;
+      --accent-ink: #2a0f1d;
+      --glow: 255, 125, 157;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #170f24;
+    --surface: #22173a;
+    --fg: #f6e8f0;
+    --muted: #bba5c6;
+    --line: rgba(246, 232, 240, 0.2);
+    --accent: #ff7d9d;
+    --accent-ink: #2a0f1d;
+    --glow: 255, 125, 157;
+    color-scheme: dark;
+  }
+
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 1.0625rem/1.55 var(--f-body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    -webkit-font-smoothing: antialiased;
+  }
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .app {
+    position: relative; z-index: 1;
+    min-height: 100%; max-width: 36rem; margin: 0 auto;
+    display: flex; flex-direction: column;
+    padding-block: 18px 28px;
+  }
+  p { margin: 0; }
+  :focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+  h1:focus, h2:focus { outline: none; }
+
+  /* progress */
+  .top { display: flex; align-items: center; gap: 14px; min-height: 40px; }
+  .back {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line);
+    background: transparent; color: var(--fg); font: 600 1.1rem var(--f-body); cursor: pointer;
+    display: grid; place-items: center; flex: none;
+  }
+  .bar { flex: 1; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
+  .bar i { height: 4px; border-radius: 2px; background: var(--line); transition: background 0.3s; }
+  .bar i.on { background: var(--accent); }
+
+  /* stages */
+  .stage {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    gap: 22px; padding-block: 28px;
+    animation: rise 0.45s ease both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .eyebrow { font: 600 0.75rem/1 var(--f-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  h1, h2 { font-family: var(--f-display); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.7rem, 12vw, 4.6rem); }
+  h2 { font-size: clamp(2rem, 8.5vw, 3rem); }
+  .lead { color: var(--muted); max-width: 40ch; }
+  .hint { color: var(--muted); font-size: 0.95rem; min-height: 1.5em; }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .btn {
+    font: 600 1rem var(--f-body); min-height: 48px; padding: 12px 24px; border-radius: 999px;
+    border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer;
+  }
+  .btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+  .btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+  /* volume scene */
+  .say-wrap { min-height: 8.5rem; display: flex; align-items: flex-end; overflow: hidden; }
+  #say {
+    font-family: var(--f-display); margin: 0; line-height: 1; white-space: nowrap;
+    font-optical-sizing: auto;
+  }
+  #say.loud { text-transform: uppercase; }
+  #say.shake { animation: shake 0.09s linear infinite; }
+  @keyframes shake { 0% { transform: translate(0, 0); } 25% { transform: translate(1.5px, -1px); } 50% { transform: translate(-1.5px, 1px); } 75% { transform: translate(1px, 1.5px); } 100% { transform: translate(0, 0); } }
+  .readout { display: flex; align-items: flex-end; gap: 16px; }
+  .db { font: 600 1.05rem var(--f-body); font-variant-numeric: tabular-nums; min-width: 4.2rem; }
+  .meter { flex: 1; display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; height: 30px; align-items: end; }
+  .meter i { background: var(--line); border-radius: 2px; transition: background 0.12s; }
+  .meter i.on { background: var(--accent); }
+  .caption { font-size: 1.1rem; min-height: 3.3em; max-width: 36ch; }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 40px; background: transparent; cursor: pointer; --p: 100%;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px; border-radius: 3px;
+    background: linear-gradient(to right, var(--accent) var(--p), var(--line) var(--p));
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 30px; height: 30px; margin-top: -12px;
+    border-radius: 50%; background: var(--accent); border: 4px solid var(--bg); box-shadow: 0 0 0 1.5px var(--accent);
+  }
+  input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: var(--line); }
+  input[type="range"]::-moz-range-progress { height: 6px; border-radius: 3px; background: var(--accent); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 4px solid var(--bg); box-shadow: 0 0 0 1.5px var(--accent);
+  }
+  .ends { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.85rem; margin-top: -4px; }
+
+  /* cards and promises */
+  .stack { display: grid; gap: 12px; }
+  .own, .vow {
+    display: block; width: 100%; text-align: left; background: var(--surface); color: var(--fg);
+    border: 1.5px solid var(--line); border-radius: 16px; padding: 16px 18px; cursor: pointer; font: inherit;
+    transition: border-color 0.2s;
+  }
+  .own.read { border-color: var(--accent); }
+  .own-t { display: flex; justify-content: space-between; align-items: center; font: 600 1.2rem var(--f-display); }
+  .own-t::after { content: "+"; color: var(--accent); font-size: 1.5rem; line-height: 1; }
+  .own[aria-expanded="true"] .own-t::after { content: "\2212"; }
+  .own-b { display: block; margin-top: 10px; color: var(--muted); animation: rise 0.3s ease both; }
+  .vow { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+  .vow[aria-pressed="true"] { border-color: var(--accent); }
+  .tick {
+    width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line);
+    display: grid; place-items: center; color: transparent; font-weight: 700; transition: all 0.2s;
+  }
+  .vow[aria-pressed="true"] .tick { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .count { color: var(--muted); font-size: 0.95rem; min-height: 1.5em; font-variant-numeric: tabular-nums; }
+
+  /* ending */
+  .result { border-left: 3px solid var(--accent); padding-left: 16px; display: grid; gap: 8px; animation: rise 0.4s ease both; }
+  .result-t { font: 700 1.9rem/1.1 var(--f-display); letter-spacing: -0.01em; }
+  .reply { display: grid; gap: 10px; animation: rise 0.4s ease both; }
+  .reply label { font-weight: 600; }
+  textarea {
+    width: 100%; min-height: 7rem; resize: vertical; padding: 12px 14px; border-radius: 14px;
+    border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font: inherit;
+  }
+  .link { background: none; border: 0; color: var(--muted); font: inherit; text-decoration: underline; cursor: pointer; padding: 8px 0; justify-self: start; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage, .own-b, .result, .reply { animation: none; }
+    #say.shake { animation: none; }
+    .bar i, .tick, .own, .vow, .meter i { transition: none; }
+  }
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="app">
+  <div class="top">
+    <button class="back" id="back" type="button" aria-label="Go back" style="visibility:hidden">&larr;</button>
+    <div class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <!-- 0: opening -->
+  <section class="stage" data-step="0">
+    <p class="eyebrow">For you</p>
+    <h1>I&rsquo;m sorry I shouted at you.</h1>
+    <p class="lead">I&rsquo;ve been thinking about it all night. You deserve more than a quick text, so I made you this. It takes about two minutes.</p>
+    <div class="actions">
+      <button class="btn" type="button" data-next>Okay, I&rsquo;ll read it</button>
+    </div>
+  </section>
+
+  <!-- 1: volume -->
+  <section class="stage" data-step="1" hidden>
+    <p class="eyebrow">How it sounded</p>
+    <h2 class="sr-title" style="font-size:clamp(1.3rem,5vw,1.6rem);letter-spacing:0">Turn me down.</h2>
+    <div class="say-wrap"><p id="say" class="loud shake" aria-hidden="true">I&rsquo;m sorry</p></div>
+    <div class="readout">
+      <div class="db" id="db">90 dB</div>
+      <div class="meter" id="meter" aria-hidden="true"></div>
+    </div>
+    <div>
+      <input type="range" id="vol" min="0" max="100" value="100" aria-label="My volume, from whisper to shout">
+      <div class="ends"><span>whisper</span><span>shout</span></div>
+    </div>
+    <p class="caption" id="cap" aria-live="polite">This is the voice you heard. It was too loud and too sharp, and it hurt.</p>
+    <p class="hint" id="hint1">Drag the slider down to turn me down.</p>
+    <div class="actions">
+      <button class="btn" type="button" id="next1" data-next disabled>Continue</button>
+    </div>
+  </section>
+
+  <!-- 2: what I got wrong -->
+  <section class="stage" data-step="2" hidden>
+    <p class="eyebrow">What I got wrong</p>
+    <h2>Three things I own.</h2>
+    <p class="lead">Tap each one.</p>
+    <div class="stack" id="owns">
+      <button class="own" type="button" aria-expanded="false">
+        <span class="own-t">I shouted.</span>
+        <span class="own-b" hidden>Raising my voice is never the right way to be heard. It made you brace yourself, and you should never have to do that around me.</span>
+      </button>
+      <button class="own" type="button" aria-expanded="false">
+        <span class="own-t">I stopped listening.</span>
+        <span class="own-b" hidden>I talked over you when I should have heard you out. What you feel matters as much as what I feel.</span>
+      </button>
+      <button class="own" type="button" aria-expanded="false">
+        <span class="own-t">I made you feel small.</span>
+        <span class="own-b" hidden>Whatever frustrated me, it gave me no right to hurt you. I&rsquo;m sorry I did.</span>
+      </button>
+    </div>
+    <p class="count" id="ownCount">0 of 3 read</p>
+    <div class="actions">
+      <button class="btn" type="button" id="next2" data-next disabled>Continue</button>
+    </div>
+  </section>
+
+  <!-- 3: promises -->
+  <section class="stage" data-step="3" hidden>
+    <p class="eyebrow">What changes</p>
+    <h2>My promises to you.</h2>
+    <p class="lead">Tap the ones you want me to keep. Choose all of them if you like.</p>
+    <div class="stack" id="vows">
+      <button class="vow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true">&#10003;</span><span>I&rsquo;ll stop and breathe before I answer when I&rsquo;m angry.</span></button>
+      <button class="vow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true">&#10003;</span><span>I&rsquo;ll say &ldquo;I need a minute&rdquo; and take it, instead of raising my voice.</span></button>
+      <button class="vow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true">&#10003;</span><span>I&rsquo;ll listen until you&rsquo;ve finished, every time.</span></button>
+      <button class="vow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true">&#10003;</span><span>I&rsquo;ll come back and talk it through calmly, so nothing is left hanging.</span></button>
+    </div>
+    <p class="count" id="vowCount" aria-live="polite">&nbsp;</p>
+    <div class="actions">
+      <button class="btn" type="button" data-next>Continue</button>
+    </div>
+  </section>
+
+  <!-- 4: forgiveness -->
+  <section class="stage" data-step="4" hidden>
+    <p class="eyebrow">One last thing</p>
+    <h2>Can you forgive me?</h2>
+    <p class="lead">Whatever your answer is, it&rsquo;s okay.</p>
+    <div class="actions" id="choices">
+      <button class="btn" type="button" id="yes">Yes, I forgive you</button>
+      <button class="btn ghost" type="button" id="notyet">Not yet</button>
+    </div>
+    <div class="result" id="result" hidden aria-live="polite">
+      <p class="result-t" id="resT"></p>
+      <p id="resB" class="lead"></p>
+    </div>
+    <div class="reply" id="reply" hidden>
+      <label for="msg">Anything you want me to hear?</label>
+      <textarea id="msg" placeholder="Write it here, then copy it and send it to me."></textarea>
+      <div class="actions">
+        <button class="btn ghost" type="button" id="copy">Copy message</button>
+        <span class="hint" id="copyNote" aria-live="polite"></span>
+      </div>
+    </div>
+    <button class="link" type="button" id="again">Read it again</button>
+  </section>
+</div>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- stages ---------- */
+  var stages = $$(".stage"), bars = $$(".bar i"), back = $("#back"), cur = 0;
+  function go(n, focus) {
+    cur = Math.max(0, Math.min(stages.length - 1, n));
+    stages.forEach(function (s, i) { s.hidden = i !== cur; });
+    bars.forEach(function (b, i) { b.className = i <= cur ? "on" : ""; });
+    back.style.visibility = cur === 0 ? "hidden" : "visible";
+    window.scrollTo(0, 0);
+    if (focus) {
+      var h = stages[cur].querySelector("h1,h2");
+      if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch (e) {} }
+    }
+  }
+  back.addEventListener("click", function () { go(cur - 1, true); });
+  $$("[data-next]").forEach(function (b) { b.addEventListener("click", function () { go(cur + 1, true); }); });
+
+  /* ---------- volume ---------- */
+  var vol = $("#vol"), say = $("#say"), dbEl = $("#db"), cap = $("#cap"), hint = $("#hint1"), next1 = $("#next1");
+  var meter = $("#meter"), segs = [];
+  for (var i = 0; i < 14; i++) {
+    var s = document.createElement("i");
+    s.style.height = (30 + i * 5.4) + "%";
+    meter.appendChild(s); segs.push(s);
+  }
+  var lines = [
+    "This is the voice you heard. It was too loud and too sharp, and it hurt.",
+    "It didn’t need to get this far. I could have stopped right here.",
+    "This is how I should have spoken to you. Quietly, and with care."
+  ];
+  var unlocked = false;
+  function setVol() {
+    var raw = +vol.value, v = raw / 100;
+    vol.style.setProperty("--p", raw + "%");
+    say.style.fontWeight = Math.round(250 + 550 * v);
+    say.style.fontStretch = Math.round(100 - 25 * v) + "%";
+    say.style.letterSpacing = (0.04 - 0.06 * v).toFixed(3) + "em";
+    say.style.fontSize = "calc(clamp(2.4rem, 12.5vw, 4.8rem) * " + (0.6 + 0.4 * v).toFixed(3) + ")";
+    say.className = (v > 0.5 ? "loud" : "") + (v > 0.82 && !reduce ? " shake" : "");
+    dbEl.textContent = Math.round(30 + 60 * v) + " dB";
+    var lit = Math.ceil(v * 14);
+    segs.forEach(function (sg, idx) { sg.className = idx < lit ? "on" : ""; });
+    cap.textContent = lines[v > 0.66 ? 0 : v > 0.33 ? 1 : 2];
+    if (raw <= 8 && !unlocked) {
+      unlocked = true; next1.disabled = false;
+      hint.textContent = "That’s the voice you deserve.";
+    }
+  }
+  vol.addEventListener("input", setVol);
+  setVol();
+
+  /* ---------- owned cards ---------- */
+  var owns = $$("#owns .own"), seen = {}, ownCount = $("#ownCount"), next2 = $("#next2");
+  owns.forEach(function (c, idx) {
+    c.addEventListener("click", function () {
+      var open = c.getAttribute("aria-expanded") === "true";
+      c.setAttribute("aria-expanded", String(!open));
+      c.querySelector(".own-b").hidden = open;
+      if (!open) { c.classList.add("read"); seen[idx] = true; }
+      var n = Object.keys(seen).length;
+      ownCount.textContent = n + " of 3 read";
+      if (n === 3) { next2.disabled = false; ownCount.textContent = "All three read. Thank you for hearing me out."; }
+    });
+  });
+
+  /* ---------- promises ---------- */
+  var vows = $$("#vows .vow"), vowCount = $("#vowCount");
+  vows.forEach(function (v) {
+    v.addEventListener("click", function () {
+      v.setAttribute("aria-pressed", v.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      var n = vows.filter(function (x) { return x.getAttribute("aria-pressed") === "true"; }).length;
+      vowCount.textContent = n ? "Sealed: " + n + " of 4. I’ll hold myself to " + (n === 1 ? "it." : "them.") : " ";
+    });
+  });
+
+  /* ---------- ending ---------- */
+  var result = $("#result"), resT = $("#resT"), resB = $("#resB"), reply = $("#reply");
+  function answer(t, b) {
+    resT.textContent = t; resB.textContent = b;
+    result.hidden = false; reply.hidden = false;
+  }
+  $("#yes").addEventListener("click", function () {
+    answer("Thank you.", "I love you, and I’ll show it in how I talk to you, starting now.");
+    burst();
+  });
+  $("#notyet").addEventListener("click", function () {
+    answer("That’s fair.", "Take all the time you need. I’ll be here when you’re ready, and I’ll keep showing you with what I do.");
+  });
+  $("#copy").addEventListener("click", function () {
+    var msg = $("#msg"), note = $("#copyNote"), t = msg.value.trim();
+    if (!t) { note.textContent = "Write something first."; return; }
+    var done = function () { note.textContent = "Copied. Paste it into our chat."; };
+    var fail = function () { msg.focus(); msg.select(); note.textContent = "Select the text and copy it."; };
+    try { navigator.clipboard.writeText(t).then(done, fail); } catch (e) { fail(); }
+  });
+  $("#again").addEventListener("click", function () { go(0, true); });
+
+  /* ---------- sky ---------- */
+  var cv = $("#sky"), ctx = cv.getContext("2d"), W = 0, H = 0, motes = [], hearts = [], glow = "191,47,91", frame = 0;
+  function readGlow() {
+    var g = getComputedStyle(document.documentElement).getPropertyValue("--glow").trim();
+    if (g) glow = g;
+  }
+  function size() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    motes = [];
+    var n = Math.round(Math.min(46, W / 18));
+    for (var i = 0; i < n; i++) {
+      motes.push({ x: Math.random() * W, y: Math.random() * H, r: 1 + Math.random() * 2.2,
+        vy: 0.08 + Math.random() * 0.22, ph: Math.random() * 6.28, a: 0.15 + Math.random() * 0.3 });
+    }
+    readGlow(); draw(true);
+  }
+  function heart(x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.3);
+    ctx.bezierCurveTo(x, y - s * 0.2, x - s, y - s * 0.2, x - s, y + s * 0.3);
+    ctx.bezierCurveTo(x - s, y + s * 0.8, x, y + s * 1.0, x, y + s * 1.3);
+    ctx.bezierCurveTo(x, y + s * 1.0, x + s, y + s * 0.8, x + s, y + s * 0.3);
+    ctx.bezierCurveTo(x + s, y - s * 0.2, x, y - s * 0.2, x, y + s * 0.3);
+    ctx.fill();
+  }
+  var running = false;
+  function draw(once) {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    if (frame % 90 === 1) readGlow();
+    motes.forEach(function (m) {
+      if (!reduce) {
+        m.y -= m.vy; m.x += Math.sin(frame / 90 + m.ph) * 0.2;
+        if (m.y < -5) { m.y = H + 5; m.x = Math.random() * W; }
+      }
+      ctx.fillStyle = "rgba(" + glow + "," + m.a + ")";
+      ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, 6.283); ctx.fill();
+    });
+    hearts = hearts.filter(function (h) { return h.life > 0; });
+    hearts.forEach(function (h) {
+      h.vy += 0.07; h.vx *= 0.99; h.x += h.vx; h.y += h.vy; h.life -= 0.007;
+      ctx.fillStyle = "rgba(" + glow + "," + Math.max(h.life, 0) + ")";
+      heart(h.x, h.y, h.s);
+    });
+    if (once === true) { running = false; if (!reduce) loop(); return; }
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  function loop() { if (running || reduce) return; running = true; requestAnimationFrame(draw); }
+  function burst() {
+    if (reduce) return;
+    var cx = W / 2, cy = H * 0.55;
+    for (var i = 0; i < 48; i++) {
+      var a = Math.random() * 6.283, sp = 2 + Math.random() * 5;
+      hearts.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, s: 5 + Math.random() * 9, life: 1 });
+    }
+  }
+  window.addEventListener("resize", size);
+  try {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readGlow(); if (reduce) draw(true); });
+  } catch (e) {}
+  size();
+})();
+</script>
+
+</body></html>
